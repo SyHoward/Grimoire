@@ -48,6 +48,9 @@ namespace Grimoire.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeityId"));
 
+                    b.Property<int>("CorrespondenceId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(1000)
@@ -58,6 +61,8 @@ namespace Grimoire.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("DeityId");
+
+                    b.HasIndex("CorrespondenceId");
 
                     b.ToTable("Deities");
                 });
@@ -317,18 +322,29 @@ namespace Grimoire.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Grimoire.Data.Entities.NoteEntity", b =>
+            modelBuilder.Entity("Grimoire.Data.Entities.DeityEntity", b =>
                 {
-                    b.HasOne("Grimoire.Data.Entities.DeityEntity", "Deity")
+                    b.HasOne("Grimoire.Data.Entities.CorrespondenceEntity", "Correspondence")
                         .WithMany()
-                        .HasForeignKey("DeityId")
+                        .HasForeignKey("CorrespondenceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Correspondence");
+                });
+
+            modelBuilder.Entity("Grimoire.Data.Entities.NoteEntity", b =>
+                {
+                    b.HasOne("Grimoire.Data.Entities.DeityEntity", "Deity")
+                        .WithMany("Notes")
+                        .HasForeignKey("DeityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Grimoire.Data.Entities.UserEntity", "User")
-                        .WithMany()
+                        .WithMany("Notes")
                         .HasForeignKey("Owner")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Deity");
@@ -385,6 +401,16 @@ namespace Grimoire.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Grimoire.Data.Entities.DeityEntity", b =>
+                {
+                    b.Navigation("Notes");
+                });
+
+            modelBuilder.Entity("Grimoire.Data.Entities.UserEntity", b =>
+                {
+                    b.Navigation("Notes");
                 });
 #pragma warning restore 612, 618
         }

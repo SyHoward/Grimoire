@@ -19,5 +19,18 @@ public class AppDbContext : IdentityDbContext<UserEntity, IdentityRole<int>, int
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<UserEntity>().ToTable("Users");
+        
+        modelBuilder.Entity<NoteEntity>()
+            .HasOne(n => n.User)
+            .WithMany(u => u.Notes)
+            .HasForeignKey(n => n.Owner)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+            modelBuilder.Entity<NoteEntity>()
+            .HasOne(n => n.Deity)
+            .WithMany(d => d.Notes)
+            .HasForeignKey(n => n.DeityId)
+            .OnDelete(DeleteBehavior.Restrict);
+
     }
 }

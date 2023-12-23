@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
 namespace Grimoire.Data.Entities;
@@ -13,4 +14,7 @@ public class UserEntity : IdentityUser<int>
 
     [Required]
     public DateTimeOffset DateCreated { get; set; }
+
+
+    public List<NoteEntity> Notes { get; set; } = new();
 }

@@ -6,12 +6,13 @@ namespace Grimoire.WebMvc.Controllers;
 public class DeityController : Controller
 {
     private readonly IDeityService _deitySerivce;
-
-    public DeityController(IDeityService deityService)
+    private readonly HttpClient _httpClient;
+    public DeityController(IDeityService deityService, IHttpClientFactory httpClientFactory)
     {
         _deitySerivce = deityService;
+        _httpClient = httpClientFactory.CreateClient("gmapi");
     }
-
+    
     public IActionResult Index()
     {
         return View();

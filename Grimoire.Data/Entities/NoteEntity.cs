@@ -9,12 +9,10 @@ public class NoteEntity
     public int NoteId { get; set; }
 
     [Required]
-    [ForeignKey(nameof(User))]
     public int Owner { get; set; }
     public UserEntity User {get; set;}
 
     [Required]
-    [ForeignKey(nameof(Deity))]
     public int DeityId { get; set; }
     public virtual DeityEntity Deity {get; set;}
 

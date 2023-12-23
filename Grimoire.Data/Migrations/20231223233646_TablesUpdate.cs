@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Grimoire.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class TryAgain : Migration
+    public partial class TablesUpdate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,17 +27,16 @@ namespace Grimoire.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Deities",
+                name: "Correspondences",
                 columns: table => new
                 {
-                    DeityId = table.Column<int>(type: "int", nullable: false)
+                    CorrespondenceId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Deities", x => x.DeityId);
+                    table.PrimaryKey("PK_Correspondences", x => x.CorrespondenceId);
                 });
 
             migrationBuilder.CreateTable(
@@ -46,8 +45,9 @@ namespace Grimoire.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    DateCreated = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -86,6 +86,27 @@ namespace Grimoire.Data.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Deities",
+                columns: table => new
+                {
+                    DeityId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    CorrespondenceId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Deities", x => x.DeityId);
+                    table.ForeignKey(
+                        name: "FK_Deities_Correspondences_CorrespondenceId",
+                        column: x => x.CorrespondenceId,
+                        principalTable: "Correspondences",
+                        principalColumn: "CorrespondenceId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -174,6 +195,36 @@ namespace Grimoire.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Notes",
+                columns: table => new
+                {
+                    NoteId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Owner = table.Column<int>(type: "int", nullable: false),
+                    DeityId = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Body = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notes", x => x.NoteId);
+                    table.ForeignKey(
+                        name: "FK_Notes_Deities_DeityId",
+                        column: x => x.DeityId,
+                        principalTable: "Deities",
+                        principalColumn: "DeityId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Notes_Users_Owner",
+                        column: x => x.Owner,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -200,6 +251,21 @@ namespace Grimoire.Data.Migrations
                 name: "IX_AspNetUserRoles_RoleId",
                 table: "AspNetUserRoles",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Deities_CorrespondenceId",
+                table: "Deities",
+                column: "CorrespondenceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Notes_DeityId",
+                table: "Notes",
+                column: "DeityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Notes_Owner",
+                table: "Notes",
+                column: "Owner");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -233,13 +299,19 @@ namespace Grimoire.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Deities");
+                name: "Notes");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Deities");
+
+            migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Correspondences");
         }
     }
 }

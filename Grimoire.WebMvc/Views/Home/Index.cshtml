@@ -1,5 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Grimoire.Data.Entities
+@using Newtonsoft.Json
+@inject HttpClient httpClient
 @inject SignInManager<UserEntity> SignInManager
 
 @{
@@ -18,7 +20,7 @@
     {
         <div class="row gx-5">
             <div class=" col-4">
-                <div class="container bg-light">
+                <div class="container p-3 bg-secondary gy-5">
                     <div class="d-flex justify-content-center m-5">
                         <h2>
                             @User.Identity?.Name
@@ -31,27 +33,29 @@
                         </label>
                     </div>
                 </div>
-
             </div>
             <div class=" col-8">
-                <div class="container bg-light">
+                <div class="container p-2 bg-light gy-5">
                     <div class="d-flex justify-content-center m-5">
-                        @*@if (DeityEntity.IsSelected)
-                    { *@
+                        @* @if (DeityEntity.IsSelected)
+                        { *@
                         <div>
                             <h1>
-                                Main Block
+                                Deity
+                                <picture>
+                                    <source srcset="..." type="image/svg+xml">
+                                    <img src="..." class="img-fluid img-thumbnail" alt=".">
+                                </picture>
                             </h1>
                         </div>
+                        @* }
+                        else
+                        {
                         <div>
-
+                            <h1>Select a Deity</h1>
                         </div>
+                        } *@
                     </div>
-                    @* }
-                else
-                {
-
-                } *@
                 </div>
             </div>
         </div>

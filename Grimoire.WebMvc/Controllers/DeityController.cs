@@ -11,5 +11,9 @@ public class DeityController : Controller
     {
         _deitySerivce = deityService;
     }
-    
+
+    public IActionResult Index()
+    {
+        return View();
+    }
 }

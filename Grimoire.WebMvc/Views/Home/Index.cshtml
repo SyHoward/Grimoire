@@ -1,8 +1,64 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using Grimoire.Data.Entities
+@inject SignInManager<UserEntity> SignInManager
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">UnderConstruction</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<body>
+    @if (!SignInManager.IsSignedIn(User))
+    {
+        <div class="text-center">
+            <h1 class="display-4">UnderConstruction</h1>
+            <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+        </div>
+    }
+    else
+    {
+        <div class="row gx-5">
+            <div class=" col-4">
+                <div class="container bg-light">
+                    <div class="d-flex justify-content-center m-5">
+                        <h2>
+                            @User.Identity?.Name
+                        </h2>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Deity
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+            <div class=" col-8">
+                <div class="container bg-light">
+                    <div class="d-flex justify-content-center m-5">
+                        @*@if (DeityEntity.IsSelected)
+                    { *@
+                        <div>
+                            <h1>
+                                Main Block
+                            </h1>
+                        </div>
+                        <div>
+
+                        </div>
+                    </div>
+                    @* }
+                else
+                {
+
+                } *@
+                </div>
+            </div>
+        </div>
+    }
+</body>
+
+@* @private async Task<bool> IsSelected(string deityEntity)
+{
+DeityEntity? deity =
+} *@

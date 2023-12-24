@@ -1,3 +1,7 @@
+using System.Reflection.Metadata.Ecma335;
+using System.Text.Json;
+using Azure;
+using Grimoire.Models.Deity;
 using Grimoire.Services.Deity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -5,16 +9,23 @@ namespace Grimoire.WebMvc.Controllers;
 
 public class DeityController : Controller
 {
-    private readonly IDeityService _deitySerivce;
+    private readonly IDeityService _deityService;
     private readonly HttpClient _httpClient;
-    public DeityController(IDeityService deityService, IHttpClientFactory httpClientFactory)
+    public DeityController(IHttpClientFactory httpClientFactory, IDeityService deityService)
     {
-        _deitySerivce = deityService;
         _httpClient = httpClientFactory.CreateClient("gmapi");
+        _deityService = deityService;
     }
     
-    public IActionResult Index()
+    [HttpGet]
+    public async Task<IActionResult> Index()
     {
-        return View();
+        List<DeityViewModel> deities = await _deityService.GetDeitiesAsync();
+        return View(deities);
+    }
+
+    public async Task<List<DeityViewModel>> GetDeitiesAsnyc()
+    {
+        return await _httpClient.GetAsync<
     }
 }

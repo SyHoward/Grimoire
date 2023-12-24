@@ -14,7 +14,7 @@ public class DeityResults<TResult>
     public string? Previous {get; set;}    
 
     [JsonPropertyName("results")]
-    public IList<TResult> Results {get; set;} = null!;
+    public IEnumerable<TResult> Results {get; set;} = null!;
 
 
     public string? NextPageNum => Next?.Split("?page=").LastOrDefault();

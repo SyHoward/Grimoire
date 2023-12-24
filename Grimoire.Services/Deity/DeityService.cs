@@ -1,4 +1,6 @@
 using Grimoire.Data;
+using Grimoire.Models.Deity;
+
 
 namespace Grimoire.Services.Deity;
 
@@ -10,5 +12,9 @@ public class DeityService : IDeityService
         _context = context;
     }
 
+    public async Task<List<DeityViewModel>> GetDeitiesAsnyc()
+    {
+        return await _c
+    }
 
 }

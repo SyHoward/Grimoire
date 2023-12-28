@@ -11,8 +11,11 @@ public class DeityEntity
     [Required]
     public string Name { get; set; } 
     
-    [Required, MaxLength(1000)]
-    public string? Description { get; set; }
+    [Required, MaxLength(500)]
+    public string? Power { get; set; }
+
+    // public string? Father { get; set; }
+    // public string? Mother { get; set; }
     
     [ForeignKey(nameof(Correspondence))]
     public int CorrespondenceId { get; set; }

@@ -1,4 +1,4 @@
-@model Grimoire.Models.Deity.DeityResults<Grimoire.Models.Deity.DeityViewModel>
+
 
 @{
     ViewData["Title"] = "Deity Index";
@@ -6,39 +6,3 @@
 
 <h1>Greek Pantheon</h1>
 
-@if (Model.Results?.Count() > 0)
-{
-    <div class="d-flex flex-row flex-wrap">
-        @foreach (var deity in Model.Results)
-        {
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 item-container">
-                <a asp-action="Deity" asp-route-id="@deity.Name" class="item">
-                    <h4>@deity.Name</h4>
-                    <div class="item-traits">
-                        <p>Mass: @deity.RomanName</p>
-                        <p>Height: @deity.Father</p>
-                        <p>Born: @deity.Mother</p>
-                    </div>
-                </a>
-            </div>
-        }
-    </div>
-    <div class="d-flex flex-row justify-content-between p-2">
-        @if (Model.Previous is not null)
-        {
-            <a class="btn btn-secondary" asp-action="Index" asp-route-page="@Model.PreviousPageNum">Previous</a>
-        }
-        else
-        {
-            <span></span>
-        }
-        @if (Model.Next is not null)
-        {
-            <a class="btn btn-secondary" asp-action="Index" asp-route-page="@Model.NextPageNum">Next</a>
-        }
-    </div>
-}
-else
-{
-    <p>There are no results for this page.</p>
-}

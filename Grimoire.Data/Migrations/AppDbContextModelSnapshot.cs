@@ -48,7 +48,8 @@ namespace Grimoire.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeityId"));
 
-                    b.Property<int>("CorrespondenceId")
+                    b.Property<int?>("CorrespondenceId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -86,7 +87,7 @@ namespace Grimoire.Data.Migrations
                     b.Property<int>("DeityId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Modified")
+                    b.Property<DateTime?>("Modified")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Owner")

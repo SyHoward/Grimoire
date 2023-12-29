@@ -2,8 +2,6 @@ using Grimoire.Data;
 using Grimoire.Data.Entities;
 using Grimoire.Models.Deity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
-
 
 namespace Grimoire.Services.Deity;
 

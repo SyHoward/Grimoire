@@ -1,7 +1,5 @@
 using Grimoire.Models.Deity;
 using Grimoire.Services.Deity;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Grimoire.WebMvc.Controllers;

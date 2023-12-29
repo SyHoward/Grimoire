@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Grimoire.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class TablesUpdate : Migration
+    public partial class nullCorrespondence : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -96,7 +96,7 @@ namespace Grimoire.Data.Migrations
                     DeityId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    Power = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     CorrespondenceId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -206,7 +206,7 @@ namespace Grimoire.Data.Migrations
                     Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Body = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {

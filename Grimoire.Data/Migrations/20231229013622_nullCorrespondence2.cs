@@ -5,7 +5,7 @@
 namespace Grimoire.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class DeityEdit2 : Migration
+    public partial class nullCorrespondence2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

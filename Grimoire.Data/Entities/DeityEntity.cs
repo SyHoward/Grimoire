@@ -13,11 +13,7 @@ public class DeityEntity
     
     [Required, MaxLength(500)]
     public string Power { get; set; }
-
-    // public string? Father { get; set; }
-    // public string? Mother { get; set; }
     
-    [ForeignKey(nameof(Correspondence))]
     public int? CorrespondenceId { get; set; }
     public virtual CorrespondenceEntity Correspondence {get; set;}
 

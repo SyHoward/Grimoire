@@ -12,7 +12,6 @@ public class NoteEntity
     public int Owner { get; set; }
     public UserEntity User {get; set;}
 
-    [Required]
     public int DeityId { get; set; }
     public virtual DeityEntity Deity {get; set;}
 

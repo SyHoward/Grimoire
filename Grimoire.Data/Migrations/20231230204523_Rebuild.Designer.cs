@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Grimoire.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231229013622_nullCorrespondence2")]
-    partial class nullCorrespondence2
+    [Migration("20231230204523_Rebuild")]
+    partial class Rebuild
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -26,11 +26,15 @@ public class AppDbContext : IdentityDbContext<UserEntity, IdentityRole<int>, int
             .HasForeignKey(n => n.Owner)
             .OnDelete(DeleteBehavior.Restrict);
         
-            modelBuilder.Entity<NoteEntity>()
+        modelBuilder.Entity<NoteEntity>()
             .HasOne(n => n.Deity)
             .WithMany(d => d.Notes)
             .HasForeignKey(n => n.DeityId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        modelBuilder.Entity<DeityEntity>()
+            .HasOne(d => d.Correspondence)
+            .WithMany()
+            .HasForeignKey(d => d.CorrespondenceId);
     }
 }

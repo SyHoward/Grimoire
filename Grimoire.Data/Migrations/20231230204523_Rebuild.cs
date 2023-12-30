@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Grimoire.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class nullCorrespondence : Migration
+    public partial class Rebuild : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

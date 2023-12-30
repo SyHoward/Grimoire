@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Grimoire.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Rebuild : Migration
+    public partial class SamRebuild : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -97,7 +97,7 @@ namespace Grimoire.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Power = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    CorrespondenceId = table.Column<int>(type: "int", nullable: false)
+                    CorrespondenceId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -106,8 +106,7 @@ namespace Grimoire.Data.Migrations
                         name: "FK_Deities_Correspondences_CorrespondenceId",
                         column: x => x.CorrespondenceId,
                         principalTable: "Correspondences",
-                        principalColumn: "CorrespondenceId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "CorrespondenceId");
                 });
 
             migrationBuilder.CreateTable(

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Grimoire.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231230204523_Rebuild")]
-    partial class Rebuild
+    [Migration("20231230213743_SamRebuild")]
+    partial class SamRebuild
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,7 +52,6 @@ namespace Grimoire.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeityId"));
 
                     b.Property<int?>("CorrespondenceId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -330,9 +329,7 @@ namespace Grimoire.Data.Migrations
                 {
                     b.HasOne("Grimoire.Data.Entities.CorrespondenceEntity", "Correspondence")
                         .WithMany()
-                        .HasForeignKey("CorrespondenceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CorrespondenceId");
 
                     b.Navigation("Correspondence");
                 });

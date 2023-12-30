@@ -15,7 +15,7 @@ public class DeityEntity
     public string Power { get; set; }
     
     public int? CorrespondenceId { get; set; }
-    public virtual CorrespondenceEntity Correspondence {get; set;}
+    public virtual CorrespondenceEntity? Correspondence {get; set;}
 
     public List<NoteEntity> Notes { get; set; } = new();
 }

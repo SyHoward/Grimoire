@@ -38,7 +38,7 @@
                 <div class="container p-2 bg-light gy-5">
                     <div class="d-flex justify-content-center m-5">
                         @* @if (DeityEntity.IsSelected)
-                        { *@
+                    { *@
                         <div>
                             <h1>
                                 Deity
@@ -47,14 +47,21 @@
                                     <img src="..." class="img-fluid img-thumbnail" alt=".">
                                 </picture>
                             </h1>
+
+                            <div class="input-group">
+                                <div class="form-floating">
+                                    <textarea class="form-control" id="NoteBody" style="height: 100px"></textarea>
+                                    <label for="NoteBody">Entry</label>
+                                </div>
+                            </div>
                         </div>
                         @* }
-                        else
-                        {
-                        <div>
-                            <h1>Select a Deity</h1>
-                        </div>
-                        } *@
+                    else
+                    {
+                    <div>
+                    <h1>Select a Deity</h1>
+                    </div>
+                    } *@
                     </div>
                 </div>
             </div>

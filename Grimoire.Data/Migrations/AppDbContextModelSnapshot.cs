@@ -49,7 +49,6 @@ namespace Grimoire.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeityId"));
 
                     b.Property<int?>("CorrespondenceId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -327,9 +326,7 @@ namespace Grimoire.Data.Migrations
                 {
                     b.HasOne("Grimoire.Data.Entities.CorrespondenceEntity", "Correspondence")
                         .WithMany()
-                        .HasForeignKey("CorrespondenceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CorrespondenceId");
 
                     b.Navigation("Correspondence");
                 });

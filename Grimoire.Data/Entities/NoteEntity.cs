@@ -12,8 +12,8 @@ public class NoteEntity
     public int Owner { get; set; }
     public UserEntity User {get; set;}
 
-    public int DeityId { get; set; }
-    public virtual DeityEntity Deity {get; set;}
+    public int? DeityId { get; set; }
+    public virtual DeityEntity? Deity {get; set;}
 
     [Required, MinLength(1), MaxLength(100)]
     public string Title { get; set; }

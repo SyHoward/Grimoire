@@ -2,6 +2,7 @@ using Grimoire.Data;
 using Grimoire.Data.Entities;
 using Grimoire.Services.Correspondence;
 using Grimoire.Services.Deity;
+using Grimoire.Services.Note;
 using Grimoire.Services.User;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,6 +25,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDeityService, DeityService>();
 builder.Services.AddScoped<ICorrespondenceService, CorrespondenceService>();
+builder.Services.AddScoped<INoteService, NoteService>();
 
 builder.Services.AddDefaultIdentity<UserEntity>()
     .AddEntityFrameworkStores<AppDbContext>();

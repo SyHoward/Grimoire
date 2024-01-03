@@ -36,7 +36,8 @@ public class DeityController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Details (int deityId)
+    [Route("Deity/Details/{deityId}")]
+    public async Task<IActionResult> Details ([FromRoute] int deityId)
     {
         DeityDetail? model = await _deityService.DeityByIdAsync(deityId);
 
@@ -51,6 +52,7 @@ public class DeityController : Controller
     }
 
     [HttpGet]
+    [Route("Deity/Edit/{deityId}")]
     public async Task<IActionResult> Edit(int? deityId)
     {
         if (deityId == null)
@@ -80,13 +82,11 @@ public class DeityController : Controller
         return View(model);
     }
 
-
-    [HttpDelete("{deityId:int}")]
+    [HttpDelete("Deity/Delete/{deityId}")]
     public async Task<IActionResult> Delete(int deityId)
     {
         return await _deityService.DeityDeleteAsync(deityId)
             ? Ok($"Deity {deityId} was deleted successfully.")
             : BadRequest($"Deity {deityId} could not be deleted");
     }
-
 }

@@ -7,7 +7,6 @@ namespace Grimoire.WebMvc.Controllers;
 public class CorrespondenceController : Controller
 {
     private readonly ICorrespondenceService _correspondenceSerivce;
-
     public CorrespondenceController(ICorrespondenceService correspondenceService)
     {
         _correspondenceSerivce = correspondenceService;
@@ -81,7 +80,6 @@ public class CorrespondenceController : Controller
         return View(model);
     }
 
-
     [HttpDelete("{correspondenceId:int}")]
     public async Task<IActionResult> Delete(int correspondenceId)
     {
@@ -89,6 +87,4 @@ public class CorrespondenceController : Controller
             ? Ok($"Correspondence {correspondenceId} was deleted successfully.")
             : BadRequest($"Correspondence {correspondenceId} could not be deleted");
     }
-
-
 }

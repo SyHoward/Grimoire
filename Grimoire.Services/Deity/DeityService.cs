@@ -3,6 +3,7 @@ using Grimoire.Data.Entities;
 using Grimoire.Models.Deity;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace Grimoire.Services.Deity;
 
 public class DeityService : IDeityService
@@ -42,7 +43,7 @@ public class DeityService : IDeityService
         DeityEntity? deity = await _context.Deities
             .FirstOrDefaultAsync(d => d.DeityId == deityId);
 
-        return deity is null ? null : new()
+        return deity is null ? null : new DeityDetail()
         {
             DeityId = deity.DeityId,
             Name = deity.Name,

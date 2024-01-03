@@ -1,8 +1,33 @@
-
-
+@model List<Grimoire.Models.Deity.DeityRead>
 @{
     ViewData["Title"] = "Deity Index";
 }
 
-<h1>Greek Pantheon</h1>
-
+<div>
+    <h1>Greek Pantheon</h1>
+    <table class="table table-striped border">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Power</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var deity in Model)
+            {
+                <tr>
+                    <td>@deity.DeityId</td>
+                    <td>@deity.Name</td>
+                    <td>@deity.Power</td>
+                    <td class="text-end">
+                        <a asp-controller="Deity" asp-action="Details" asp-route-id="@deity.DeityId" class="btn btn-sm btn-primary">Details</a>
+                        <a asp-action="Edit" asp-route-id="@deity.DeityId" class="btn btn-sm btn-primary">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@deity.DeityId" class="btn btn-sm btn-primary">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a asp-controller="Deity" asp-action="Create" class="btn btn-sm btn-success">Enter a Deity</a>
+</div>

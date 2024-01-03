@@ -1,27 +1,14 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Grimoire.Data.Entities;
+namespace Grimoire.Models.Note;
 
-public class NoteEntity
+public class NoteCreate
 {
-    [Key]
     public int NoteId { get; set; }
-
-    [Required]
     public int Owner { get; set; }
-    public UserEntity User {get; set;}
-
     public int? DeityId { get; set; }
-    public virtual DeityEntity? Deity {get; set;}
-
-    [Required, MinLength(1), MaxLength(100)]
     public string Title { get; set; }
-
-    [Required, MinLength(1), MaxLength(4000)]
     public string Body { get; set; }
-
-    [Required]
     public DateTime Created { get; set; }
     public DateTime? Modified  { get; set; }
-    
 }

@@ -82,12 +82,13 @@ public class DeityService : IDeityService
         return true;
     }
 
-
     public async Task<bool> DeityDeleteAsync(int deityId)
-    {
-        var deityEntity = await _context.Deities.FindAsync(deityId);
+    {   
+        DeityEntity? deity = await _context.Deities.FindAsync(deityId);
+        if (deity is null)
+            return false;
 
-        _context.Deities.Remove(deityEntity);
+        _context.Deities.Remove(deity);
         return await _context.SaveChangesAsync() == 1;
     }
 

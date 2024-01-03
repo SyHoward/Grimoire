@@ -6,10 +6,10 @@ namespace Grimoire.WebMvc.Controllers;
 
 public class CorrespondenceController : Controller
 {
-    private readonly ICorrespondenceService _correspondenceSerivce;
+    private readonly ICorrespondenceService _correspondenceService;
     public CorrespondenceController(ICorrespondenceService correspondenceService)
     {
-        _correspondenceSerivce = correspondenceService;
+        _correspondenceService = correspondenceService;
     }
 
     [HttpGet]
@@ -24,21 +24,22 @@ public class CorrespondenceController : Controller
         if(!ModelState.IsValid)
             return View(icon);
 
-        await _correspondenceSerivce.CorrespondenceCreateAsync(icon);
+        await _correspondenceService.CorrespondenceCreateAsync(icon);
         return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        IList<CorrespondenceRead> icons = await _correspondenceSerivce.GetCorrespondencesAsnyc();
+        IList<CorrespondenceRead> icons = await _correspondenceService.GetCorrespondencesAsnyc();
         return View(icons);
     }
 
 [HttpGet]
+    [Route("Correspondence/Details/{correspondenceId}")]
     public async Task<IActionResult> Details (int correspondenceId)
     {
-        CorrespondenceDetail? model = await _correspondenceSerivce.CorrespondenceByIdAsync(correspondenceId);
+        CorrespondenceDetail? model = await _correspondenceService.CorrespondenceByIdAsync(correspondenceId);
 
         if(model is null)
         {
@@ -51,12 +52,13 @@ public class CorrespondenceController : Controller
     }
 
     [HttpGet]
+    [Route("Correspondence/Edit/{correspondenceId}")]
     public async Task<IActionResult> Edit(int? correspondenceId)
     {
         if (correspondenceId == null)
             return NotFound();
         
-        var icon = await _correspondenceSerivce.GetCorrespondenceEditAsync(correspondenceId);
+        var icon = await _correspondenceService.GetCorrespondenceEditAsync(correspondenceId);
 
         if (icon == null)
             return NotFound();
@@ -72,7 +74,7 @@ public class CorrespondenceController : Controller
 
         if (ModelState.IsValid)
         {
-            var edit = await _correspondenceSerivce.CorrespondenceEditAsync(correspondenceId, model);
+            var edit = await _correspondenceService.CorrespondenceEditAsync(correspondenceId, model);
             if(edit)
                 return RedirectToAction(nameof(Index));
         }
@@ -80,11 +82,23 @@ public class CorrespondenceController : Controller
         return View(model);
     }
 
-    [HttpDelete("{correspondenceId:int}")]
-    public async Task<IActionResult> Delete(int correspondenceId)
+    [HttpGet]
+    [Route("Correspondence/Delete/{correspondenceId}")]
+    public async Task<IActionResult> Delete([FromRoute] int correspondenceId)
     {
-        return await _correspondenceSerivce.CorrespondenceDeleteAsync(correspondenceId)
-            ? Ok($"Correspondence {correspondenceId} was deleted successfully.")
-            : BadRequest($"Correspondence {correspondenceId} could not be deleted");
+        
+        CorrespondenceDetail? correspondence = await _correspondenceService.CorrespondenceByIdAsync(correspondenceId);
+        if (correspondence is null)
+            return RedirectToAction(nameof(Index));
+
+        return View(correspondence);
+    }
+
+    [HttpPost]
+    [ActionName(nameof(Delete))]
+    public async Task<IActionResult> ConfrimDelete(int correspondenceId)
+    {
+        await _correspondenceService.CorrespondenceDeleteAsync(correspondenceId);
+        return RedirectToAction(nameof(Index));
     }
 }

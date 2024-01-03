@@ -82,11 +82,24 @@ public class DeityController : Controller
         return View(model);
     }
 
-    [HttpDelete("Deity/Delete/{deityId}")]
-    public async Task<IActionResult> Delete(int deityId)
+
+    [HttpGet]
+    [Route("Deity/Delete/{deityId}")]
+    public async Task<IActionResult> Delete([FromRoute] int deityId)
     {
-        return await _deityService.DeityDeleteAsync(deityId)
-            ? Ok($"Deity {deityId} was deleted successfully.")
-            : BadRequest($"Deity {deityId} could not be deleted");
+        
+        DeityDetail? deity = await _deityService.DeityByIdAsync(deityId);
+        if (deity is null)
+            return RedirectToAction(nameof(Index));
+
+        return View(deity);
+    }
+
+    [HttpPost]
+    [ActionName(nameof(Delete))]
+    public async Task<IActionResult> ConfrimDelete(int deityId)
+    {
+        await _deityService.DeityDeleteAsync(deityId);
+        return RedirectToAction(nameof(Index));
     }
 }

@@ -1,11 +1,11 @@
-@model Grimoire.Models.Deity.DeityDelete
+@model Grimoire.Models.Deity.DeityDetail
 @{
     string title = $"{@Model.Name}";
     ViewData["Title"]  =  $"Delete {@title}";
 }
 
 <div class="d-flex justify-content-between align-items-center mb-2">
-    <h1 class="display-4">@title</h1>
+    <h1 class="display-4">Delete @title</h1>
 </div>
 
 <dl class="row">
@@ -22,11 +22,7 @@
         @Html.DisplayFor(model =>model.Power)
     </dd>
 </dl>
-<div class="col d-flex justify-content-between align-items-baseline">
-        <a asp-action="Index">Back to List</a>
-        <input type="submit" value="Delete" class="btn btn-primary">
-    </div>
-
-<div>
-    <a asp-action="Index" class="btn btn-primary">Back to List</a>
-</div>
+<form asp-action="Delete" class="d-flex justify-content-between align-items-baseline">
+    <a asp-action="Index">Back to List</a>
+    <input type="submit" value="Delete" class="btn btn-danger"/>
+</form>

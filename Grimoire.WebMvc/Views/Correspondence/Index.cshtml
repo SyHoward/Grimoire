@@ -1,0 +1,30 @@
+@model List<Grimoire.Models.Correspondence.CorrespondenceRead>
+@{
+    ViewData["Title"] = "Correspondence Index";
+}
+
+<div>
+    <h1>Correspondence Index</h1>
+    <table class="table table-striped border">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var correspondence in Model)
+            {
+                <tr>
+                    <td>@correspondence.CorrespondenceId</td>
+                    <td>@correspondence.Name</td>
+                    <td class="text-end">
+                        <a asp-action="Details" asp-route-id="@correspondence.CorrespondenceId" class="btn btn-sm btn-primary">Details</a>
+                        <a asp-action="Edit" asp-route-id="@correspondence.CorrespondenceId" class="btn btn-sm btn-primary">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@correspondence.CorrespondenceId" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a asp-controller="Correspondence" asp-action="Create" class="btn btn-sm btn-success">Create A Correspondence</a>

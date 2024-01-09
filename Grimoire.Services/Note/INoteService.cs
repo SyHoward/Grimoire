@@ -10,4 +10,5 @@ public interface INoteService
     Task<NoteEdit> GetNoteEditAsync(int? noteId);
     Task<bool> NoteEditAsync(int noteId, NoteEdit note);
     Task<bool> NoteDeleteAsync(int noteId);
+    void SetOwner(int owner);
 }

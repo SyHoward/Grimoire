@@ -7,6 +7,6 @@ namespace Grimoire.Models.Note;
     public int? DeityId { get; set; }
     public string Title { get; set; }
     public string Body { get; set; }
-    public DateTime Created { get; set; }
-    public DateTime? Modified  { get; set; }
+    public DateTimeOffset CreatedUtc { get; set; }
+    public DateTimeOffset? ModifiedUtc  { get; set; }
     }

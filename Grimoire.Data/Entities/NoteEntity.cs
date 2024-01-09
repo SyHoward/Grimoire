@@ -21,7 +21,7 @@ public class NoteEntity
     public string Body { get; set; }
 
     [Required]
-    public DateTime Created { get; set; }
-    public DateTime? Modified  { get; set; }
+    public DateTimeOffset CreatedUtc { get; set; }
+    public DateTimeOffset? ModifiedUtc  { get; set; }
     
 }

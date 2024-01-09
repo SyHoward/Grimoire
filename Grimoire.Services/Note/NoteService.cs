@@ -1,29 +1,32 @@
 using Grimoire.Data;
 using Grimoire.Data.Entities;
 using Grimoire.Models.Note;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace Grimoire.Services.Note;
 
 public class NoteService : INoteService
 {
     private readonly AppDbContext _context;
-    public NoteService(AppDbContext context)
+    private readonly UserManager<UserEntity> _userManager;
+    private int _owner;
+    public NoteService(AppDbContext context, UserManager<UserEntity> userManager)
     {
         _context = context;
+        _userManager = userManager;
     }
 
     public async Task<bool> NoteCreateAsync(NoteCreate note)
     {
         NoteEntity entity = new ()
         {
-            NoteId = note.NoteId,
-            Owner = note.Owner,
+            Owner = _owner,
             DeityId = note.DeityId,
             Title = note.Title,
             Body = note.Body,
-            Created = note.Created,
-            Modified = note.Modified
+            CreatedUtc = DateTimeOffset.Now
         };
     _context.Notes.Add(entity);
     return await _context.SaveChangesAsync() == 1;
@@ -31,6 +34,7 @@ public class NoteService : INoteService
 
     public async Task<List<NoteRead>> GetNotesAsnyc()
     {
+
         List<NoteRead> notes = await _context.Notes
             .Select(n => new NoteRead
             {
@@ -39,8 +43,8 @@ public class NoteService : INoteService
                 DeityId = n.DeityId,
                 Title = n.Title,
                 Body = n.Body,
-                Created = n.Created,
-                Modified = n.Modified
+                CreatedUtc = n.CreatedUtc,
+                ModifiedUtc = n.ModifiedUtc
             })
             .ToListAsync();
         return notes;
@@ -58,8 +62,8 @@ public class NoteService : INoteService
             DeityId = note.DeityId,
             Title = note.Title,
             Body = note.Body,
-            Created = note.Created,
-            Modified = note.Modified
+            CreatedUtc = note.CreatedUtc,
+            ModifiedUtc = note.ModifiedUtc
         };
     }
 
@@ -74,8 +78,8 @@ public class NoteService : INoteService
             DeityId = note.DeityId,
             Title = note.Title,
             Body = note.Body,
-            Created = note.Created,
-            Modified = note.Modified
+            CreatedUtc = note.CreatedUtc,
+            ModifiedUtc = note.ModifiedUtc
         };
 
         return model;
@@ -94,8 +98,8 @@ public class NoteService : INoteService
         entity.DeityId = note.DeityId;
         entity.Title = note.Title;
         entity.Body = note.Body;
-        entity.Created = note.Created;
-        entity.Modified = note.Modified;
+        entity.CreatedUtc = note.CreatedUtc;
+        entity.ModifiedUtc = note.ModifiedUtc;
 
         _context.Notes.Update(entity);
         await _context.SaveChangesAsync();
@@ -111,4 +115,8 @@ public class NoteService : INoteService
         _context.Notes.Remove(noteEntity);
         return await _context.SaveChangesAsync() == 1;
     }
+
+    //Get's the User ID
+    // public System.Security.Claims.ClaimsPrincipal Owner { get; set; }
+    public void SetOwner(int owner) => _owner = owner;
 }

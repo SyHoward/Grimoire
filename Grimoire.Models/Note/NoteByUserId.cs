@@ -7,6 +7,6 @@ public class NoteByUserId
     public int? DeityId { get; set; }
     public string Title { get; set; }
     public string Body { get; set; }
-    public DateTime Created { get; set; }
-    public DateTime? Modified  { get; set; }
+    public DateTimeOffset Created { get; set; }
+    public DateTimeOffset? Modified  { get; set; }
 }

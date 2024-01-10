@@ -1,4 +1,6 @@
+using Grimoire.Models.Deity;
 using Grimoire.Models.User;
+using Grimoire.Services.Deity;
 using Grimoire.Services.User;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,10 +8,14 @@ namespace Grimoire.WebMvc.Controllers;
 public class AccountController : Controller
 {
     private readonly IUserService _userService;
+    private readonly IDeityService _deityService;
 
-    public AccountController(IUserService userService)
+
+    public AccountController(IUserService userService, IDeityService deityService)
     {
         _userService = userService;
+        _deityService = deityService;
+
     }
 
     public async Task<IActionResult> Register()
@@ -56,4 +62,11 @@ public class AccountController : Controller
         await _userService.LogoutAsync();
         return RedirectToAction("Index", "Home");
     }
+
+    public async Task<IActionResult> Deity()
+    {
+        IList<DeityRead> deities = await _deityService.GetDeitiesAsnyc();
+        return View(deities);
+    }
+
 }

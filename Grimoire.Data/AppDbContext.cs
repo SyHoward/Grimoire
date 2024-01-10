@@ -11,6 +11,7 @@ public class AppDbContext : IdentityDbContext<UserEntity, IdentityRole<int>, int
         DbContextOptions<AppDbContext> options)
         : base(options) {}
 
+    public DbSet<UserEntity> Users {get; set;}
     public DbSet<CorrespondenceEntity> Correspondences {get; set;}
     public DbSet<DeityEntity> Deities { get; set; }
     public DbSet<NoteEntity> Notes { get; set; }

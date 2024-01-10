@@ -2,8 +2,10 @@ using Grimoire.Models.Note;
 using Grimoire.Services.Note;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Grimoire.Data.Entities;
 using System.Security.Claims;
+using System.Web;
 
 namespace Grimoire.WebMvc.Controllers;
 
@@ -19,12 +21,23 @@ public class NoteController : Controller
         _noteService = noteService;
         _userManager = userManager;
         _signInManager = signInManager;
-        // _userId = User.Identity.
+        
+        // _userId = User.Identity.GetUserId();
         // var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
         // _userId = int.TryParse(userIdClaim, out var id)? id : 0;
-        _userId = 1;
+        // _userId = 1;
     }
-    
+
+    private void AssignUserId()
+    {
+        if (User.Identity.IsAuthenticated)
+        {
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            string userId = claimsIdentity?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            _userId = int.Parse(userId);
+        }
+    }
+
     [HttpGet]
     public IActionResult Create()
     {
@@ -34,8 +47,10 @@ public class NoteController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(NoteCreate note)
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
             return View(note);
+
+        AssignUserId();
 
         _noteService.SetOwner(_userId);
 
@@ -53,11 +68,11 @@ public class NoteController : Controller
     [HttpGet]
     [Route("Note/Details/{noteId}")]
 
-    public async Task<IActionResult> Details ([FromRoute] int noteId)
+    public async Task<IActionResult> Details([FromRoute] int noteId)
     {
         NoteDetail? model = await _noteService.NoteByIdAsync(noteId);
 
-        if(model is null)
+        if (model is null)
         {
             return NotFound();
         }
@@ -73,12 +88,12 @@ public class NoteController : Controller
     {
         if (noteId == null)
             return NotFound();
-        
+
         var note = await _noteService.GetNoteEditAsync(noteId);
 
         if (note == null)
             return NotFound();
-        
+
         return View(note);
     }
 
@@ -91,14 +106,14 @@ public class NoteController : Controller
         if (ModelState.IsValid)
         {
             var edit = await _noteService.NoteEditAsync(noteId, model);
-            if(edit)
+            if (edit)
                 return RedirectToAction(nameof(Index));
         }
 
         return View(model);
     }
 
-    [HttpDelete] 
+    [HttpDelete]
     [Route("Note/Delete/{noteId}")]//!
     public async Task<IActionResult> Delete(int noteId)
     {

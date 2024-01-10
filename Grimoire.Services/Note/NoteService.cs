@@ -4,29 +4,32 @@ using Grimoire.Models.Note;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace Grimoire.Services.Note;
 
 public class NoteService : INoteService
 {
     private readonly AppDbContext _context;
     private readonly UserManager<UserEntity> _userManager;
+    private readonly SignInManager<UserEntity> _signInManager;
     private int _owner;
-    public NoteService(AppDbContext context, UserManager<UserEntity> userManager)
+    public NoteService(AppDbContext context, UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager)
     {
         _context = context;
         _userManager = userManager;
+        _signInManager = signInManager;
     }
 
     public async Task<bool> NoteCreateAsync(NoteCreate note)
     {
+        // var userId = User.Identity.GetUserId();
+
         NoteEntity entity = new ()
         {
             Owner = _owner,
             DeityId = note.DeityId,
             Title = note.Title,
             Body = note.Body,
-            CreatedUtc = DateTimeOffset.Now
+            CreatedUtc = DateTime.Now
         };
     _context.Notes.Add(entity);
     return await _context.SaveChangesAsync() == 1;
@@ -74,7 +77,6 @@ public class NoteService : INoteService
         NoteEdit model = new()
         {
             NoteId = note.NoteId,
-            Owner = note.Owner,
             DeityId = note.DeityId,
             Title = note.Title,
             Body = note.Body,
@@ -99,7 +101,7 @@ public class NoteService : INoteService
         entity.Title = note.Title;
         entity.Body = note.Body;
         entity.CreatedUtc = note.CreatedUtc;
-        entity.ModifiedUtc = note.ModifiedUtc;
+        entity.ModifiedUtc = DateTime.Now;
 
         _context.Notes.Update(entity);
         await _context.SaveChangesAsync();

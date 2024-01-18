@@ -15,8 +15,7 @@ public class UserEntity : IdentityUser<int>
     [Required]
     public DateTime DateCreated { get; set; }
 
-    public int? DeityId { get; set; }
-    public virtual DeityEntity? Deity {get; set;}
+    public ICollection<DeityEntity> Deities {get; set;} = new List<DeityEntity>();
 
     public List<NoteEntity> Notes { get; set; } = new();
 }

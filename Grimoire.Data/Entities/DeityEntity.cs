@@ -18,4 +18,5 @@ public class DeityEntity
     public virtual CorrespondenceEntity? Correspondence {get; set;}
 
     public List<NoteEntity> Notes { get; set; } = new();
+    public ICollection<UserEntity> Users {get; set;}
 }

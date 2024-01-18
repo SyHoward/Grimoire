@@ -2,6 +2,7 @@ using Grimoire.Data;
 using Grimoire.Data.Entities;
 using Grimoire.Models.User;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Grimoire.Services.User;
@@ -53,6 +54,23 @@ public class UserService : IUserService
         var createResult = await _userManager.CreateAsync(user, model.Password);
         return createResult.Succeeded;
     }
+
+    public async Task<bool> AddDeityToUser(int userId, int[] selectedDeityIds)
+    {
+        var user = await _context.Users.FindAsync(userId);
+        if (user != null)
+        {
+            var selectedDeities = await _context.Deities
+                .Where(d => selectedDeityIds.Contains(d.DeityId))
+                .ToListAsync();
+
+            ((List<DeityEntity>)user.Deities).AddRange(selectedDeities);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        return false;
+    }
+
 
     private async Task<bool> UserExistsAsync(string email, string userName)
     {

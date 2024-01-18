@@ -1,6 +1,7 @@
 using Grimoire.Data;
 using Grimoire.Data.Entities;
 using Grimoire.Models.Deity;
+using Grimoire.Models.User;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -33,6 +34,18 @@ public class DeityService : IDeityService
                 DeityId = d.DeityId,
                 Name = d.Name,
                 Power = d.Power
+            })
+            .ToListAsync();
+        return deities;
+    }
+
+    public async Task<List<UserDeityAdd>> GetDeitiesForUserAsnyc()
+    {
+        List<UserDeityAdd> deities = await _context.Deities
+            .Select(d => new UserDeityAdd
+            {
+                DeityId = d.DeityId,
+                Name = d.Name,
             })
             .ToListAsync();
         return deities;

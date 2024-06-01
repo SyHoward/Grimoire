@@ -28,13 +28,13 @@
                     </div>
                     <form>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                            <label class="form-check-label" for="flexRadioDefault1">
+                            <input class="form-check-input"  type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                            <label class="form-check-label text-white" for="flexRadioDefault1">
                                 Deity
                             </label>
                         </div>
                     </form>
-                    <a asp-controller="Account" asp-action="Deity" class="btn btn-sm btn-success">Add a Deity</a>
+                    <a asp-controller="Account" asp-action="Deity" class="btn btn-sm btn-secondary">Add a Deity</a>
                 </div>
             </div>
             <div class=" col-8">
@@ -63,7 +63,7 @@
                                     <label asp-for="Body" class="form-label"></label>
                                     <input asp-for="Body" class="form-control" id="NoteBody" style="height: 100px">
                                     <span asp-validation-for="Body" class="text-danger"></span>
-                                    <input class="btn btn-primary float-end" type="submit" value="Submit">
+                                    <input class="btn btn-secondary float-end" type="submit" value="Submit">
                                 </div>
                             </form>
                         </div>
